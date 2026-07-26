@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Opening BurnThatBite...</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#FBF3E8;color:#2D1500;font-family:system-ui,-apple-system,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.card{background:#fff;border:1.5px solid #EDD9C0;border-radius:20px;padding:40px 32px;max-width:380px;width:100%;text-align:center}
+.icon{font-size:48px;margin-bottom:20px}
+h1{font-size:22px;font-weight:800;color:#2D1500;margin-bottom:8px}
+.sub{font-size:15px;color:#7A5030;line-height:1.6;margin-bottom:28px}
+.btn{display:inline-block;background:#E8873A;color:#fff;font-size:16px;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none;border:none;cursor:pointer;width:100%}
+.btn:active{opacity:0.85}
+.fallback{display:none;margin-top:20px;font-size:13px;color:#B09A80;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="icon">&#128293;</div>
+  <h1 id="title">Opening BurnThatBite&hellip;</h1>
+  <p class="sub" id="sub">Taking you to the password reset screen.</p>
+  <a class="btn" id="openBtn" href="#">Open BurnThatBite</a>
+  <p class="fallback" id="fallback">
+    Didn&rsquo;t open? Make sure BurnThatBite is installed on your phone,
+    then tap <strong>Open BurnThatBite</strong> above, or open this page
+    on the device where the app is installed.
+  </p>
+</div>
+<script>
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var deepLink = 'burnthatbite://auth/callback?' + params.toString();
+  document.getElementById('openBtn').href = deepLink;
+  window.location.href = deepLink;
+  setTimeout(function() {
+    document.getElementById('title').textContent = 'Open BurnThatBite';
+    document.getElementById('sub').textContent = 'Tap the button below to reset your password.';
+    document.getElementById('fallback').style.display = 'block';
+  }, 2500);
+})();
+</script>
+</body>
+</html>
