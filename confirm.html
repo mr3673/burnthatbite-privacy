@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BurnThatBite – Confirm Email</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #FBF3E8;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 24px;
+      padding: 40px 32px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    .icon { font-size: 56px; margin-bottom: 16px; }
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+    .btn {
+      display: inline-block;
+      background: linear-gradient(90deg, #FF4D1C, #FF2D55);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 14px 32px;
+      border-radius: 12px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+    }
+    .fallback {
+      margin-top: 16px;
+      font-size: 13px;
+      color: #999;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">🔥</div>
+
+    <!-- Initial state: redirecting -->
+    <div id="opening">
+      <h1>Confirming your email…</h1>
+      <p>Taking you to the BurnThatBite app.</p>
+    </div>
+
+    <!-- Fallback state: app didn't open -->
+    <div id="fallback" class="hidden">
+      <h1>Open BurnThatBite</h1>
+      <p>Tap the button below to confirm your email and get started.</p>
+      <a id="deeplink-btn" href="#" class="btn">Open BurnThatBite</a>
+      <p class="fallback">Make sure BurnThatBite is installed on this device.</p>
+    </div>
+  </div>
+
+  <script>
+    // Forward all query params (including Supabase's `code`) to the app deep link
+    var params = window.location.search; // e.g. "?code=XXX"
+    var deepLink = 'burnthatbite://auth/callback' + params;
+
+    document.getElementById('deeplink-btn').href = deepLink;
+
+    // Attempt immediate redirect
+    window.location.href = deepLink;
+
+    // After 2.5 s, if we're still here the app didn't open — show fallback
+    setTimeout(function () {
+      document.getElementById('opening').classList.add('hidden');
+      document.getElementById('fallback').classList.remove('hidden');
+    }, 2500);
+  </script>
+</body>
+</html>
